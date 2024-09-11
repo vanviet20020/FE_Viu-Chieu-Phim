@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import AdminLayout from '@/component/layout/Admin';
+import AdminLayout from '@/components/layouts/Admin';
 
 function UserAdminPage() {
   const [data, setData] = useState();

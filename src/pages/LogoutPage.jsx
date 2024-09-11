@@ -1,18 +1,19 @@
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import useAxiosInstance from '@/util/axios.customize';
-import { useAuth } from '@/provider/authProvider';
-import { getCookie, removeCookie } from '@/util/cookie';
+import useAxiosInstance from '@/utils/axios.customize';
+import { useAuth } from '@/providers/authProvider';
+import { getCookie, removeCookie } from '@/utils/cookie';
 
 const LogoutPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { setToken, setUser } = useAuth();
+  const { clearAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const refreshToken = getCookie('refreshToken');
+
       const response = await axiosInstance.post('/user/sign-off', {
         refreshToken,
       });
@@ -22,12 +23,14 @@ const LogoutPage = () => {
       }
 
       removeCookie('refreshToken');
-      setToken();
-      setUser();
-      alert(response.data.message);
+      clearAuth();
+      message.success(response.data.message);
       navigate('/');
     } catch (err) {
-      throw new Error(err.response?.data?.message || err.message);
+      console.error('Lỗi trong quá trình đăng xuất:', err);
+      message.warning(
+        `Đăng xuất thất bại: ${err.response?.data?.message || err.message}`
+      );
     }
   };
 

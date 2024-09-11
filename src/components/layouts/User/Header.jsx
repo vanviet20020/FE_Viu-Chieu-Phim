@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/provider/authProvider';
+import { useAuth } from '@/providers/authProvider';
 import LogoutPage from '@/pages/LogoutPage';
 import Logo from '@/assets/logo1024.jpg';
 import './Header.scss';
@@ -12,8 +12,8 @@ function Header() {
     <header className="header">
       <div className="container">
         <div className="row">
-          <div className="col-md-2 col-sm-2">
-            <Link to="">
+          <div className="col-md-2 col-sm-2 logo">
+            <Link to="/">
               <img src={Logo} alt="Viu Chiếu Phim" />
             </Link>
           </div>
@@ -54,7 +54,7 @@ function Header() {
           <div className="col-md-2 col-sm-2 user">
             {user ? (
               <>
-                <p>Hello {user.fullname}</p>
+                <div>Hello {user.fullname}</div>
                 <LogoutPage />
               </>
             ) : (

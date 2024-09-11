@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import SideBar from './SideBar';
-import NavBar from './NavBar';
+import SideBar from './Sidebar';
+import Navbar from './Navbar';
 import './Style.scss';
 
 function debounce(func, wait) {
@@ -40,7 +40,7 @@ function AdminLayout({ children }) {
   }, []);
 
   const handleMenuBarClick = useCallback(() => {
-    setIsSidebarHidden(!isSidebarHidden);
+    setIsSidebarHidden((prevState) => !prevState);
   }, [isSidebarHidden]);
 
   const handleSearchButtonClick = useCallback(
@@ -57,7 +57,7 @@ function AdminLayout({ children }) {
     <>
       <SideBar isSidebarHidden={isSidebarHidden} />
       <section id="content">
-        <NavBar
+        <Navbar
           handleMenuBarClick={handleMenuBarClick}
           handleSearchButtonClick={handleSearchButtonClick}
           isSearchFormShown={isSearchFormShown}

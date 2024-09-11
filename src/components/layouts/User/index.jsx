@@ -1,9 +1,10 @@
 import Header from './Header';
+import { Fragment } from 'react';
 import Footer from './Footer';
 
 function MainLayout({ children }) {
   return (
-    <>
+    <Fragment>
       <Header />
       <main>
         <div className="container">
@@ -11,7 +12,7 @@ function MainLayout({ children }) {
         </div>
       </main>
       <Footer />
-    </>
+    </Fragment>
   );
 }
 

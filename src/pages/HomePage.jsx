@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import useAxiosInstance from '@/util/axios.customize';
-import MainLayout from '@/component/layout/User';
-import './HomePage.scss';
+import useAxiosInstance from '@/utils/axios.customize';
+import MainLayout from '@/components/layouts/User';
+import MovieItem from '@/components/MovieItem/MovieItem';
 
 function HomePage() {
-  const axiosInstance = useAxiosInstance();
-  const [moviesShowing, setMoviesShowing] = useState('');
-  const [upCommingMovie, setUpCommingMovie] = useState('');
+  // const axiosInstance = useAxiosInstance();
+  // const [moviesShowing, setMoviesShowing] = useState([]);
+  // const [moviesUpComming, setMoviesUpComming] = useState([]);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -36,111 +36,140 @@ function HomePage() {
   //   fetchData();
   // }, []);
 
+  const moviesShowing = [
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+  ];
+
+  const moviesUpComming = [
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+    {
+      link: '',
+      name: 'XUYÊN KHÔNG CẢI MỆNH GIA TỘ',
+      imgLink:
+        'https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg',
+      releaseDate: 'Khởi chiếu 24/9',
+    },
+  ];
   return (
     <MainLayout>
       <h2>Phim đang chiếu</h2>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">Khởi chiếu 24/9</div>
-      </div>
-
+      {moviesShowing.length > 0 ? (
+        moviesShowing.map((item, index) => (
+          <MovieItem
+            key={index}
+            link={item.link}
+            name={item.name}
+            imgLink={item.imgLink}
+            releaseDate={item.releaseDate}
+          />
+        ))
+      ) : (
+        <p>Hiện không có phim nào đang chiếu.</p>
+      )}
       <h2>Phim sắp chiếu</h2>
-      <div className="movie-item">
-        <div className="movie-thumb">
-          <Link to="">
-            <img
-              src="https://rapchieuphim.com/photos/9/xuyen-khong-cai-menh-gia-toc.jpg"
-              alt="XUYÊN KHÔNG CẢI MỆNH GIA TỘC"
-            />
-          </Link>
-        </div>
-        <h3 className="movie-title">
-          <Link></Link> xuyen-khong-cai-menh-gia-toc
-        </h3>
-        <div className="movie-release_date">24/9</div>
-      </div>
+      {moviesUpComming.length > 0 ? (
+        moviesUpComming.map((item, index) => (
+          <MovieItem
+            key={index}
+            link={item.link}
+            name={item.name}
+            imgLink={item.imgLink}
+            releaseDate={item.releaseDate}
+          />
+        ))
+      ) : (
+        <p>Không có phim sắp chiếu.</p>
+      )}
     </MainLayout>
   );
 }
-
 export default HomePage;

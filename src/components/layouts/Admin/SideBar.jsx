@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const dataSideBars = [
   {
-    title: 'Chung',
+    title: 'Thống kê',
     // link: 'management',
-    link: '#',
+    link: '/admin/dashboard',
     icon: 'bx bxs-dashboard',
   },
   {
@@ -16,8 +16,7 @@ const dataSideBars = [
   },
   {
     title: 'Phim',
-    // link: 'movies/management',
-    link: '#',
+    link: '/admin/movie',
     icon: 'bx bxs-film',
   },
   {
@@ -40,7 +39,7 @@ const dataSideBars = [
   },
 ];
 
-function SideBar({ isSideBarHidden }) {
+function Sidebar({ isSidebarHidden }) {
   const [activeLink, setActiveLink] = useState(0); // Đặt mặc định là 0
 
   const handleClick = (index) => {
@@ -48,8 +47,8 @@ function SideBar({ isSideBarHidden }) {
   };
 
   return (
-    <section id="sidebar" className={isSideBarHidden ? 'hide' : ''}>
-      <Link to="/admin" className="brand">
+    <section id="sidebar" className={isSidebarHidden ? 'hide' : ''}>
+      <Link to="/admin/dashboard" className="brand">
         <i className="bx bxs-home"></i>
         <span className="text">Trang quản lý</span>
       </Link>
@@ -65,20 +64,20 @@ function SideBar({ isSideBarHidden }) {
       </ul>
       <ul className="side-menu">
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="bx bxs-cog"></i>
             <span className="text">Settings</span>
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#" className="logout">
+          <Link to="/" className="logout">
             <i className="bx bx-log-out"></i>
-            <span className="text">Logout</span>
-          </a>
+            <span className="text">Quay lại trang chủ</span>
+          </Link>
         </li>
       </ul>
     </section>
   );
 }
 
-export default SideBar;
+export default Sidebar;

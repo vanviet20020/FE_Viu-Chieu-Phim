@@ -1,7 +1,7 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, json } from 'react-router-dom';
 
-import { useAuth } from '@/provider/authProvider';
-import { ProtectedRoute } from './ProtectedRoute';
+import { useAuth } from '@/providers/authProvider';
+import ProtectedRoute from './ProtectedRoute';
 
 import HomePage from '@/pages/HomePage';
 import AboutPage from '@/pages/AboutPage';
@@ -10,12 +10,17 @@ import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import LogoutPage from '@/pages/LogoutPage';
+import UnauthorizedPage from '@/pages/UnauthorizedPage';
+import MissingPage from '@/pages/MissingPage';
 
-import AdminPage from '@/pages/Admin/AdminPage';
+import DashboardPage from '@/pages/Admin/DashboardPage';
 import UserAdminPage from '@/pages/Admin/UserPage';
+import MovieAdminPage from '@/pages/Admin/MoviePage';
+
+const ROLES = { user: 'user', admin: 'admin', superAdmin: 'super_admin' };
 
 const Routes = () => {
-  const { token, user } = useAuth();
+  const { user } = useAuth();
 
   // Define public routes accessible to all users
   const routesForPublic = [
@@ -27,26 +32,22 @@ const Routes = () => {
       path: 'contact',
       element: <ContactPage />,
     },
+    {
+      path: 'unauthorized',
+      element: <UnauthorizedPage />,
+    },
   ];
 
   // Define routes accessible only to authenticated users
-  const routesForAuthenticatedOnly = [
+  const routesForUserOnly = [
     {
       path: '/',
-      element: <ProtectedRoute />,
+      element: <ProtectedRoute allowedRoles={[ROLES.user]} />,
       errorElement: <NotFoundPage />,
       children: [
         {
           path: '/',
           element: <HomePage />,
-        },
-        {
-          path: 'admin',
-          element: <AdminPage />,
-        },
-        {
-          path: 'user',
-          element: <UserAdminPage />,
         },
         {
           path: 'profile',
@@ -57,6 +58,39 @@ const Routes = () => {
           element: <LogoutPage />,
         },
       ],
+    },
+  ];
+
+  // Define routes accessible only to authenticated admin
+  const routesForAdminOnly = [
+    {
+      path: 'admin',
+      element: <ProtectedRoute allowedRoles={[ROLES.admin]} />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: 'dashboard',
+          element: <DashboardPage />,
+        },
+        {
+          path: 'user',
+          element: <UserAdminPage />,
+        },
+        {
+          path: 'movie',
+          element: <MovieAdminPage />,
+        },
+      ],
+    },
+  ];
+
+  // Define routes accessible only to authenticated super_admin
+  const routesForSuperAdminOnly = [
+    {
+      path: 'admin',
+      element: <ProtectedRoute allowedRoles={[ROLES.superAdmin]} />,
+      errorElement: <NotFoundPage />,
+      children: [],
     },
   ];
 
@@ -76,11 +110,13 @@ const Routes = () => {
     },
   ];
 
-  // Combine and conditionally include routes based on authentication status
   const router = createBrowserRouter([
     ...routesForPublic,
-    ...(!token ? routesForNotAuthenticatedOnly : []),
-    ...routesForAuthenticatedOnly,
+    ...(!user ? routesForNotAuthenticatedOnly : []),
+    ...routesForUserOnly,
+    ...routesForAdminOnly,
+    ...routesForSuperAdminOnly,
+    { path: '*', element: <MissingPage /> } /* catch all */,
   ]);
 
   return <RouterProvider router={router} />;

@@ -577,41 +577,41 @@ body {
         }
       }
 
-      .todo {
-        flex-grow: 1;
-        flex-basis: 300px;
+      //   .todo {
+      //     flex-grow: 1;
+      //     flex-basis: 300px;
 
-        .todo-list {
-          width: 100%;
+      //     .todo-list {
+      //       width: 100%;
 
-          li {
-            width: 100%;
-            margin-bottom: 16px;
-            background: var(--grey);
-            border-radius: 10px;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+      //       li {
+      //         width: 100%;
+      //         margin-bottom: 16px;
+      //         background: var(--grey);
+      //         border-radius: 10px;
+      //         padding: 14px 20px;
+      //         display: flex;
+      //         justify-content: space-between;
+      //         align-items: center;
 
-            .bx {
-              cursor: pointer;
-            }
+      //         .bx {
+      //           cursor: pointer;
+      //         }
 
-            &:last-child {
-              margin-bottom: 0;
-            }
-          }
+      //         &:last-child {
+      //           margin-bottom: 0;
+      //         }
+      //       }
 
-          li.completed {
-            border-left: 10px solid var(--blue);
-          }
+      //       li.completed {
+      //         border-left: 10px solid var(--blue);
+      //       }
 
-          li.not-completed {
-            border-left: 10px solid var(--orange);
-          }
-        }
-      }
+      //       li.not-completed {
+      //         border-left: 10px solid var(--orange);
+      //       }
+      //     }
+      //   }
     }
   }
 }
@@ -702,6 +702,12 @@ body {
             min-width: 420px;
           }
         }
+
+        // .todo {
+        //   .todo-list {
+        //     min-width: 420px;
+        //   }
+        // }
       }
     }
   }

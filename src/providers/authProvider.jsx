@@ -1,29 +1,30 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
-import { getCookie, setCookie, removeCookie } from '@/util/cookie';
+import { getCookie, setCookie, removeCookie } from '@/utils/cookie';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [token, setToken_] = useState(getCookie('token') || null);
-  const [user, setUser_] = useState(getCookie('user') || null);
+  const [token, setToken] = useState(getCookie('token') || null);
+  const initialUser = getCookie('user') || null;
+  const [user, setUser] = useState(JSON.parse(initialUser));
 
-  const setToken = (newToken) => {
-    setToken_(newToken);
+  const setAuth = (token, user) => {
+    setToken(token);
+    setUser(user);
   };
 
-  const setUser = (newUser) => {
-    setUser_(newUser);
+  const clearAuth = () => {
+    setToken(null);
+    setUser(null);
   };
 
   useEffect(() => {
     try {
       if (token && user) {
-        // axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
         setCookie('token', token);
         setCookie('user', JSON.stringify(user));
       } else {
-        // delete axios.defaults.headers.common['Authorization'];
         removeCookie('token');
         removeCookie('user');
       }
@@ -35,9 +36,9 @@ const AuthProvider = ({ children }) => {
   const contextValue = useMemo(
     () => ({
       token,
-      setToken,
       user,
-      setUser,
+      setAuth,
+      clearAuth,
     }),
     [token, user]
   );
