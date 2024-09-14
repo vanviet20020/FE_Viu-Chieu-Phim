@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
-
 import { useAuth } from '@/providers/authProvider';
 import LogoutPage from '@/pages/LogoutPage';
 import Logo from '@/assets/logo1024.jpg';
 import './Header.scss';
 
-function Header() {
+const Header = () => {
   const { user } = useAuth();
-
   return (
     <header className="header">
       <div className="container">
@@ -72,6 +70,6 @@ function Header() {
       </div>
     </header>
   );
-}
+};
 
 export default Header;

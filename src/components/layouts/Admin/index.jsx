@@ -3,15 +3,15 @@ import SideBar from './Sidebar';
 import Navbar from './Navbar';
 import './Style.scss';
 
-function debounce(func, wait) {
+const debounce = (func, wait) => {
   let timeout;
   return function (...args) {
     clearTimeout(timeout);
     timeout = setTimeout(() => func.apply(this, args), wait);
   };
-}
+};
 
-function AdminLayout({ children }) {
+const AdminLayout = ({ children }) => {
   const [isSidebarHidden, setIsSidebarHidden] = useState(
     window.innerWidth < 768
   );
@@ -41,7 +41,7 @@ function AdminLayout({ children }) {
 
   const handleMenuBarClick = useCallback(() => {
     setIsSidebarHidden((prevState) => !prevState);
-  }, [isSidebarHidden]);
+  }, []);
 
   const handleSearchButtonClick = useCallback(
     (e) => {
@@ -66,6 +66,6 @@ function AdminLayout({ children }) {
       </section>
     </>
   );
-}
+};
 
 export default AdminLayout;

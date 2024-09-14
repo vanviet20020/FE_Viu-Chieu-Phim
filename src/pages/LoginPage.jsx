@@ -11,28 +11,29 @@ const LoginPage = () => {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
 
-  const loginAction = async (data) => {
-    try {
-      const { email, password, remember } = data;
-      const response = await axiosInstance.post('/user/sign-in', {
-        email,
-        password,
+  const loginAction = (data) => {
+    const { email, password, remember } = data;
+
+    return axiosInstance
+      .post('/user/sign-in', { email, password })
+      .then((response) => {
+        if (!response.data) {
+          throw new Error('Phản hồi từ máy chủ không hợp lệ');
+        }
+
+        const { currentUser, token, refreshToken, message } = response.data;
+
+        setAuth(token, currentUser);
+
+        if (remember) {
+          setCookie('refreshToken', refreshToken, 30 * 24 * 60);
+        }
+
+        return { message };
+      })
+      .catch((error) => {
+        throw new Error(error.response?.data?.message || error.message);
       });
-
-      if (!response.data) {
-        throw new Error('Phản hồi từ máy chủ không hợp lệ');
-      }
-
-      const { currentUser, token, refreshToken, message } = response.data;
-
-      setAuth(token, currentUser);
-
-      if (remember) setCookie('refreshToken', refreshToken, 30 * 24 * 60);
-
-      return { message };
-    } catch (err) {
-      throw new Error(err.response?.data?.message || err.message);
-    }
   };
 
   const onFinish = async (values) => {
@@ -44,10 +45,10 @@ const LoginPage = () => {
           navigate('/');
         }
       } else {
-        message.warning('Vui lòng nhập thông tin hợp lệ');
+        message.error('Vui lòng nhập thông tin hợp lệ');
       }
-    } catch (err) {
-      message.warning(`Đăng nhập thất bại: ${err.message}`);
+    } catch (error) {
+      message.error(`Đăng nhập thất bại: ${error.message}`);
     }
   };
 

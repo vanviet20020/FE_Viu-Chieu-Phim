@@ -1,14 +1,13 @@
 import { Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-
 import useAxiosInstance from '@/utils/axios.customize';
 import { useAuth } from '@/providers/authProvider';
 import { getCookie, removeCookie } from '@/utils/cookie';
 
 const LogoutPage = () => {
   const axiosInstance = useAxiosInstance();
-  const { clearAuth } = useAuth();
   const navigate = useNavigate();
+  const { clearAuth } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -26,10 +25,9 @@ const LogoutPage = () => {
       clearAuth();
       message.success(response.data.message);
       navigate('/');
-    } catch (err) {
-      console.error('Lỗi trong quá trình đăng xuất:', err);
-      message.warning(
-        `Đăng xuất thất bại: ${err.response?.data?.message || err.message}`
+    } catch (error) {
+      message.error(
+        `Đăng xuất thất bại: ${error.response?.data?.message || error.message}`
       );
     }
   };

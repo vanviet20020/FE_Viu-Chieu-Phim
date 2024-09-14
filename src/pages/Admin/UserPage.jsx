@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import AdminLayout from '@/components/layouts/Admin';
 
-function UserAdminPage() {
+const UserAdminPage = () => {
   const [data, setData] = useState();
   return (
     <AdminLayout>
@@ -40,6 +40,6 @@ function UserAdminPage() {
       </main>
     </AdminLayout>
   );
-}
+};
 
 export default UserAdminPage;

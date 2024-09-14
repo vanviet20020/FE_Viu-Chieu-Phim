@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function Dashboard({ data }) {
+const Dashboard = ({ data }) => {
   return (
     <main>
       <div className="head-title">
@@ -18,22 +18,19 @@ function Dashboard({ data }) {
         <li>
           <i className="bx bxs-group"></i>
           <span className="text">
-            <h3>{data.user}</h3>
-            <p>Người dùng mới trong 30 ngày</p>
+            <h3>{data.user || 0}</h3> <p>Người dùng mới trong 30 ngày</p>
           </span>
         </li>
         <li>
           <i className="bx bxs-calendar-check"></i>
           <span className="text">
-            <h3>{data.ticket}</h3>
-            <p>Số vé bán được trong tháng</p>
+            <h3>{data.ticket || 0}</h3> <p>Số vé bán được trong tháng</p>
           </span>
         </li>
         <li>
           <i className="bx bxs-dollar-circle"></i>
           <span className="text">
-            <h3>{data.sumCoin} VND</h3>
-            <p>Thu nhập tháng</p>
+            <h3>{data.sumCoin || 0} VND</h3> <p>Thu nhập tháng</p>
           </span>
         </li>
       </ul>
@@ -54,22 +51,34 @@ function Dashboard({ data }) {
               </tr>
             </thead>
             <tbody>
-              {data.transactions &&
-                data.transactions.map((transaction, index) => (
-                  <tr key={index}>
-                    <td>{transaction.user.email}</td>
-                    <td>{transaction.status}</td>
-                    <td>{transaction.old_coin}</td>
-                    <td>{transaction.new_coin}</td>
-                    <td>{transaction.message}</td>
+              {data.transactions && data.transactions.length > 0 ? (
+                data.transactions.map((transaction) => (
+                  <tr key={transaction.id}>
+                    <td>{transaction.user?.email || 'N/A'}</td>
+                    <td>{transaction.status || 'N/A'}</td>
+                    <td>{transaction.old_coin || 0}</td>
+                    <td>{transaction.new_coin || 0}</td>
+                    <td>{transaction.message || 'N/A'}</td>
                   </tr>
-                ))}
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5">Không có giao dịch</td>
+                </tr>
+              )}
             </tbody>
           </table>
+          <div className="todo">
+            <div className="todo-list">
+              {data.todoList?.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </main>
   );
-}
+};
 
 export default Dashboard;

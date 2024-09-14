@@ -1,5 +1,4 @@
-import { RouterProvider, createBrowserRouter, json } from 'react-router-dom';
-
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { useAuth } from '@/providers/authProvider';
 import ProtectedRoute from './ProtectedRoute';
 
@@ -9,13 +8,14 @@ import ContactPage from '@/pages/ContactPage';
 import LoginPage from '@/pages/LoginPage';
 import RegisterPage from '@/pages/RegisterPage';
 import NotFoundPage from '@/pages/NotFoundPage';
-import LogoutPage from '@/pages/LogoutPage';
 import UnauthorizedPage from '@/pages/UnauthorizedPage';
 import MissingPage from '@/pages/MissingPage';
 
 import DashboardPage from '@/pages/Admin/DashboardPage';
 import UserAdminPage from '@/pages/Admin/UserPage';
 import MovieAdminPage from '@/pages/Admin/MoviePage';
+import MovieCreatePage from '@/pages/Admin/MovieCreatePage';
+import MovieUpdatePage from '@/pages/Admin/MovieUpdatePage';
 
 const ROLES = { user: 'user', admin: 'admin', superAdmin: 'super_admin' };
 
@@ -53,10 +53,6 @@ const Routes = () => {
           path: 'profile',
           element: <div>User Profile</div>,
         },
-        {
-          path: 'logout',
-          element: <LogoutPage />,
-        },
       ],
     },
   ];
@@ -74,11 +70,15 @@ const Routes = () => {
         },
         {
           path: 'user',
-          element: <UserAdminPage />,
+          children: [{ index: true, element: <UserAdminPage /> }],
         },
         {
           path: 'movie',
-          element: <MovieAdminPage />,
+          children: [
+            { index: true, element: <MovieAdminPage /> },
+            { path: 'create', element: <MovieCreatePage /> },
+            { path: 'update/:movieId', element: <MovieUpdatePage /> },
+          ],
         },
       ],
     },

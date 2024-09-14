@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { memo } from 'react';
+import { useLocation, Link } from 'react-router-dom';
 
 const dataSideBars = [
   {
@@ -39,12 +39,8 @@ const dataSideBars = [
   },
 ];
 
-function Sidebar({ isSidebarHidden }) {
-  const [activeLink, setActiveLink] = useState(0); // Đặt mặc định là 0
-
-  const handleClick = (index) => {
-    setActiveLink(index);
-  };
+const Sidebar = ({ isSidebarHidden }) => {
+  const location = useLocation();
 
   return (
     <section id="sidebar" className={isSidebarHidden ? 'hide' : ''}>
@@ -54,8 +50,11 @@ function Sidebar({ isSidebarHidden }) {
       </Link>
       <ul className="side-menu top">
         {dataSideBars.map((data, i) => (
-          <li key={i} className={activeLink === i ? 'active' : ''}>
-            <Link to={data.link} onClick={() => handleClick(i)}>
+          <li
+            key={i}
+            className={location.pathname.includes(data.link) ? 'active' : ''}
+          >
+            <Link to={data.link}>
               <i className={data.icon}></i>
               <span className="text">{data.title}</span>
             </Link>
@@ -78,6 +77,6 @@ function Sidebar({ isSidebarHidden }) {
       </ul>
     </section>
   );
-}
+};
 
-export default Sidebar;
+export default memo(Sidebar);

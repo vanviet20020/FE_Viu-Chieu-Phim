@@ -1,10 +1,10 @@
 import { useState, useEffect, memo } from 'react';
 
-function Navbar({
+const Navbar = ({
   handleMenuBarClick,
   handleSearchButtonClick,
   isSearchFormShown,
-}) {
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleSwitchMode = () => {
@@ -51,6 +51,6 @@ function Navbar({
       <label htmlFor="switch-mode" className="switch-mode"></label>
     </nav>
   );
-}
+};
 
 export default memo(Navbar);

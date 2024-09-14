@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import './MovieItem.scss';
+const url = import.meta.env.VITE_BACKEND_URL;
 
-function MovieItem({ link, name, imgLink, releaseDate }) {
+const MovieItem = ({ link, name, imgLink, releaseDate }) => {
   return (
     <div className="movie-item">
       <div className="movie-thumb">
         <Link to={link}>
-          <img src={imgLink} alt={name} />
+          <img src={url + imgLink} alt={name} />
         </Link>
       </div>
       <h3 className="movie-title">
@@ -15,6 +16,6 @@ function MovieItem({ link, name, imgLink, releaseDate }) {
       <div className="movie-release_date">{releaseDate}</div>
     </div>
   );
-}
+};
 
 export default MovieItem;

@@ -2,7 +2,7 @@ import Header from './Header';
 import { Fragment } from 'react';
 import Footer from './Footer';
 
-function MainLayout({ children }) {
+const MainLayout = ({ children }) => {
   return (
     <Fragment>
       <Header />
@@ -14,6 +14,6 @@ function MainLayout({ children }) {
       <Footer />
     </Fragment>
   );
-}
+};
 
 export default MainLayout;

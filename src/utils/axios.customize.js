@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
 import { useAuth } from '@/providers/authProvider';
 import { getCookie, removeCookie } from '@/utils/cookie';
 
@@ -46,8 +45,8 @@ const useAxiosInstance = () => {
         }
 
         try {
-          const response = await axios.post('/user/refresh-token', {
-            refreshToken,
+          const response = await axiosInstance.post('/user/refresh-token', {
+            data: { refreshToken },
           });
           const { token: newToken, user: currentUser } = response.data;
           setAuth(newToken, currentUser);

@@ -1,7 +1,12 @@
+import useAxiosInstance from '@/utils/axios.customize';
+import { useNavigate } from 'react-router-dom';
 import MainLayout from '@/components/layouts/User';
 import RegisterForm from '@/components/RegisterForm'; // Đường dẫn tới component RegisterForm
 
 const RegisterPage = () => {
+  const axiosInstance = useAxiosInstance();
+  const navigate = useNavigate();
+
   const loginAction = async (data) => {
     try {
       const { email, password, fullname, phoneNumber: phone_number } = data;
