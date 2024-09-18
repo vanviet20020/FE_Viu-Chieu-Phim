@@ -2,22 +2,22 @@ import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import useAxiosInstance from '@/utils/axios.customize';
 import AdminLayout from '@/components/layouts/Admin';
-import MovieForm from '@/components/Admin/MovieForm';
+import SupplierForm from '@/components/Admin/SupplierForm';
 
-const MovieCreatePage = () => {
+const SupplierCreatePage = () => {
   const axiosInstance = useAxiosInstance();
   const navigate = useNavigate();
 
-  const movieCreateAction = (data) => {
+  const supplierCreateAction = (data) => {
     return axiosInstance
-      .post('/movie', data, {
+      .post('/supplier', data, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then((response) => {
         if (!response.data) {
           throw new Error('Phản hồi từ máy chủ không hợp lệ');
         }
-        return { message: 'Tạo phim mới thành công' };
+        return { message: 'Tạo nhà cung cấp mới thành công' };
       })
       .catch((error) => {
         return new Error(error.response?.data?.message || error.message);
@@ -26,21 +26,12 @@ const MovieCreatePage = () => {
 
   const onFinish = async (values) => {
     try {
-      if (
-        values.name !== '' &&
-        values.image !== '' &&
-        values.trailer_link !== '' &&
-        values.release_date !== '' &&
-        values.runtime
-      ) {
-        const result = await movieCreateAction(values);
+      if (values.name !== '' && values.ticket_price !== '' && values.image) {
+        const result = await supplierCreateAction(values);
+
         if (result && result.message) {
           message.success(result.message);
           navigate(-1);
-        } else {
-          message.error(
-            'Cập nhật phim thất bại: phản hồi không hợp lệ hoặc không có dữ liệu.'
-          );
         }
       }
     } catch (error) {
@@ -50,8 +41,8 @@ const MovieCreatePage = () => {
 
   return (
     <AdminLayout>
-      <MovieForm onFinish={onFinish} />
+      <SupplierForm onFinish={onFinish} />
     </AdminLayout>
   );
 };
-export default MovieCreatePage;
+export default SupplierCreatePage;

@@ -44,6 +44,7 @@ const MovieForm = ({ onFinish, form = null, image = null }) => {
       initialValues={{
         status: MOVIE_STATUS.screening,
       }}
+      className="mt-4"
     >
       <Form.Item
         label="Tên phim"
@@ -80,21 +81,13 @@ const MovieForm = ({ onFinish, form = null, image = null }) => {
           fileList={fileList}
           onChange={handleChange}
         >
-          <button style={{ border: 0, background: 'none' }} type="button">
-            <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
-            <div style={{ marginTop: 8 }}>
-              {' '}
-              {fileList.length < 1 && <div>+ Tải ảnh lên</div>}
-            </div>
-          </button>
+          {fileList.length < 1 && (
+            <button style={{ border: 0, background: 'none' }} type="button">
+              <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
+              <div style={{ marginTop: 8 }}>+ Tải ảnh lên</div>
+            </button>
+          )}
         </Upload>
-
-        {/* <input
-          accept="image/*"
-          type="file"
-          filename={file}
-          onChange={(e) => setFile(e.target.files[0])}
-        /> */}
       </Form.Item>
 
       <Form.Item
@@ -149,7 +142,7 @@ const MovieForm = ({ onFinish, form = null, image = null }) => {
 
       <Form.Item {...tailFormItemLayout}>
         <Button block type="primary" htmlType="submit">
-          Tạo
+          Thực hiện
         </Button>
       </Form.Item>
     </Form>

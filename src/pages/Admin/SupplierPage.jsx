@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import useAxiosInstance from '@/utils/axios.customize';
 import AdminLayout from '@/components/layouts/Admin';
-import MovieManagement from '@/components/Admin/MovieManagement';
+import SupplierManagement from '@/components/Admin/SupplierManagement';
 
 const MoviePage = () => {
   const axiosInstance = useAxiosInstance();
   const navigate = useNavigate();
   const [data, setData] = useState({
-    movies: [],
+    suppliers: [],
     count: 0,
     page: 1,
     limit: 20,
@@ -21,14 +21,14 @@ const MoviePage = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/movie`);
+        const response = await axiosInstance.get(`/supplier`);
         if (response.status === 200) {
-          const { movies, count, page, limit } = response.data;
-          setData({ movies, count, page, limit });
+          const { suppliers, count, page, limit } = response.data;
+          setData({ suppliers, count, page, limit });
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError('Không thể tải dữ liệu phim');
+        setError('Không thể tải dữ liệu nhà cung cấp');
       } finally {
         setLoading(false);
       }
@@ -37,31 +37,33 @@ const MoviePage = () => {
     fetchData();
   }, []);
 
-  const handleDelete = async (movieId) => {
+  const handleDelete = async (supplierId) => {
     try {
-      const response = await axiosInstance.delete(`/movie/`, {
-        data: { id: movieId },
+      const response = await axiosInstance.delete(`/supplier/`, {
+        data: { id: supplierId },
       });
       if (response.status === 204) {
-        message.success('Xóa phim thành công');
+        message.success('Xóa nhà cung cấp thành công');
         setData((prevData) => ({
           ...prevData,
-          movies: prevData.movies.filter((movie) => movie._id !== movieId),
+          suppliers: prevData.suppliers.filter(
+            (supplier) => supplier._id !== supplierId
+          ),
         }));
       }
     } catch (error) {
-      console.error('Error deleting movie:', error);
-      message.error('Xóa phim thất bại');
+      console.error('Error deleting supplier:', error);
+      message.error('Xóa nhà cung cấp thất bại');
     }
   };
 
-  const handleUpdate = (movieId) => {
-    navigate(`/admin/movie/update/${movieId}`);
+  const handleUpdate = (supplierId) => {
+    navigate(`/admin/supplier/update/${supplierId}`);
   };
 
   return (
     <AdminLayout>
-      <MovieManagement
+      <SupplierManagement
         data={data}
         loading={loading}
         error={error}

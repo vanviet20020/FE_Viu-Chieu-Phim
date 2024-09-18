@@ -16,6 +16,9 @@ import UserAdminPage from '@/pages/Admin/UserPage';
 import MovieAdminPage from '@/pages/Admin/MoviePage';
 import MovieCreatePage from '@/pages/Admin/MovieCreatePage';
 import MovieUpdatePage from '@/pages/Admin/MovieUpdatePage';
+import SupplierPage from '@/pages/Admin/SupplierPage';
+import SupplierCreatePage from '@/pages/Admin/SupplierCreatePage';
+import SupplierUpdatePage from '@/pages/Admin/SupplierUpdatePage';
 
 const ROLES = { user: 'user', admin: 'admin', superAdmin: 'super_admin' };
 
@@ -78,6 +81,14 @@ const Routes = () => {
             { index: true, element: <MovieAdminPage /> },
             { path: 'create', element: <MovieCreatePage /> },
             { path: 'update/:movieId', element: <MovieUpdatePage /> },
+          ],
+        },
+        {
+          path: 'supplier',
+          children: [
+            { index: true, element: <SupplierPage /> },
+            { path: 'create', element: <SupplierCreatePage /> },
+            { path: 'update/:supplierId', element: <SupplierUpdatePage /> },
           ],
         },
       ],

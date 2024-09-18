@@ -4,13 +4,11 @@ import { useLocation, Link } from 'react-router-dom';
 const dataSideBars = [
   {
     title: 'Thống kê',
-    // link: 'management',
     link: '/admin/dashboard',
     icon: 'bx bxs-dashboard',
   },
   {
     title: 'Tài khoản',
-    // link: '#',
     link: '#',
     icon: 'bx bxs-group',
   },
@@ -21,20 +19,17 @@ const dataSideBars = [
   },
   {
     title: 'Rạp chiếu phim',
-    // link: 'cinemas/management',
     link: '#',
     icon: 'bx bxs-map',
   },
   {
     title: 'Lịch chiếu phim',
-    // link: 'movie-showtimes/management',
     link: '#',
     icon: 'bx bxs-calendar',
   },
   {
     title: 'Nhà cung cấp',
-    // link: '#',
-    link: '#',
+    link: '/admin/supplier',
     icon: 'bx bxs-group',
   },
 ];

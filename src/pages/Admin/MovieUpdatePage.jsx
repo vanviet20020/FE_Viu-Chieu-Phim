@@ -14,28 +14,33 @@ const MovieUpdatePage = () => {
   const [movie, setMovie] = useState(null);
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
-      try {
-        const response = await axiosInstance.get(`/movie/${movieId}`);
-        const movieData = response.data;
-        setMovie(movieData);
+    const fetchMovieDetails = () => {
+      return axiosInstance
+        .get(`/movie/${movieId}`)
+        .then((response) => {
+          if (!response.data) {
+            throw new Error('Phản hồi từ máy chủ không hợp lệ');
+          }
 
-        form.setFieldsValue({
-          name: movieData.name,
-          status: movieData.status,
-          trailer_link: movieData.trailer_link,
-          description: movieData.description,
-          release_date: moment(movieData.release_date),
-          runtime: movieData.runtime,
-          director: movieData.director,
-          cast: movieData.cast,
-          language: movieData.language,
-          genre: movieData.genre,
+          const movieData = response.data;
+          setMovie(movieData);
+
+          form.setFieldsValue({
+            name: movieData.name,
+            status: movieData.status,
+            trailer_link: movieData.trailer_link,
+            description: movieData.description,
+            release_date: moment(movieData.release_date),
+            runtime: movieData.runtime,
+            director: movieData.director,
+            cast: movieData.cast,
+            language: movieData.language,
+            genre: movieData.genre,
+          });
+        })
+        .catch((error) => {
+          return new Error(error.response?.data?.message || error.message);
         });
-      } catch (error) {
-        console.error('Error fetching movie details:', error);
-        message.error('Không thể lấy thông tin phim.');
-      }
     };
 
     fetchMovieDetails();
@@ -50,7 +55,7 @@ const MovieUpdatePage = () => {
         if (!response.data) {
           throw new Error('Phản hồi từ máy chủ không hợp lệ');
         }
-        return { message: 'Tạo phim mới thành công' };
+        return { message: 'Cập nhật phim thành công' };
       })
       .catch((error) => {
         return new Error(error.response?.data?.message || error.message);
@@ -66,17 +71,23 @@ const MovieUpdatePage = () => {
         values.release_date !== '' &&
         values.runtime
       ) {
-        const dataUpdate = { id: movieId, ...values };
+        const dataUpdate = { id: movieId, ...movie, ...values };
+        const result = await movieUpdateAction(dataUpdate);
 
-        console.log(dataUpdate);
+        if (!result || !result.message) {
+          message.error(
+            'Cập nhật phim thất bại: phản hồi không hợp lệ hoặc không có dữ liệu.'
+          );
+        }
+
+        message.success(result.message);
+        navigate(-1);
       }
     } catch (error) {
       console.error('Error updating movie:', error);
       message.error('Cập nhật phim thất bại');
     }
   };
-
-  console.log(movie.image);
 
   return (
     <AdminLayout>

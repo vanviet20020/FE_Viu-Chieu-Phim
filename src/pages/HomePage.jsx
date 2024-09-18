@@ -1,5 +1,5 @@
+import moment from 'moment';
 import { useEffect, useState } from 'react';
-
 import useAxiosInstance from '@/utils/axios.customize';
 import MainLayout from '@/components/layouts/User';
 import MovieItem from '@/components/MovieItem/MovieItem';
@@ -65,7 +65,7 @@ const HomePage = () => {
             link={item.link}
             name={item.name}
             imgLink={item.image}
-            releaseDate={item.releaseDate}
+            releaseDate={moment(item.release_date).format('DD/MM/YYYY')}
           />
         ))
       ) : (
@@ -80,7 +80,7 @@ const HomePage = () => {
             link={item.link}
             name={item.name}
             imgLink={item.image}
-            releaseDate={item.releaseDate}
+            releaseDate={moment(item.release_date).format('DD/MM/YYYY')}
           />
         ))
       ) : (
