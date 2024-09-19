@@ -91,7 +91,7 @@ const MovieUpdatePage = () => {
 
   return (
     <AdminLayout>
-      <MovieForm form={form} onFinish={onFinish} />
+      <MovieForm form={form} onFinish={onFinish} oldImageLink={movie?.image} />
     </AdminLayout>
   );
 };

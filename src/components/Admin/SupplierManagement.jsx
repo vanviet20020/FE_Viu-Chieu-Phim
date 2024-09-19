@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import ModalConfirm from '../ModalConfirm';
 
 const SupplierManagement = ({
   data,
@@ -50,12 +50,11 @@ const SupplierManagement = ({
                         </Link>
                       </td>
                       <td>
-                        <Button
-                          danger
-                          onClick={() => handleDelete(supplier._id)}
-                        >
-                          Xóa
-                        </Button>
+                        <ModalConfirm
+                          onOk={() => handleDelete(supplier._id)}
+                          danger={true}
+                          content={` nhà cung nhấp ${supplier.name}`}
+                        />
                       </td>
                     </tr>
                   ))

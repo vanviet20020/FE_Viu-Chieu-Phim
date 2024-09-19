@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Button } from 'antd';
+import ModalConfirm from '../ModalConfirm';
 
 const MovieManagement = ({
   data,
@@ -56,9 +56,10 @@ const MovieManagement = ({
                         </Link>
                       </td>
                       <td>
-                        <Button danger onClick={() => handleDelete(movie._id)}>
-                          Xóa
-                        </Button>
+                        <ModalConfirm
+                          onOk={() => handleDelete(movie._id)}
+                          danger={true}
+                        />
                       </td>
                     </tr>
                   ))

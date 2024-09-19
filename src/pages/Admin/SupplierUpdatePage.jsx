@@ -76,7 +76,11 @@ const SupplierUpdatePage = () => {
 
   return (
     <AdminLayout>
-      <SupplierForm form={form} onFinish={onFinish} />
+      <SupplierForm
+        form={form}
+        onFinish={onFinish}
+        oldImageLink={supplier?.ticket_price_image}
+      />
     </AdminLayout>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Button, Form, Input, Upload, InputNumber } from 'antd';
 const urlServer = import.meta.env.VITE_SERVER_URL;
 
@@ -19,15 +19,34 @@ const tailFormItemLayout = {
   },
 };
 
-const SupplierForm = ({ onFinish, form, imageLink = null }) => {
+const SupplierForm = ({ onFinish, form, oldImageLink = null }) => {
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    if (oldImageLink) {
+      setFileList([
+        {
+          uid: '-1',
+          name: 'current_image.png',
+          status: 'done',
+          url: urlServer + oldImageLink,
+        },
+      ]);
+    }
+  }, [oldImageLink]);
 
   const handleChange = (info) => {
     setFileList(info.fileList);
   };
 
   const handleSubmit = (values) => {
-    const fileData = fileList[0].originFileObj;
+    let fileData = null;
+
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      fileData = fileList[0].originFileObj;
+    } else if (oldImageLink) {
+      fileData = oldImageLink;
+    }
 
     Object.assign(values, { image: fileData });
 
@@ -52,7 +71,8 @@ const SupplierForm = ({ onFinish, form, imageLink = null }) => {
       <Form.Item
         label="Ảnh thumnail"
         name="image"
-        rules={[{ required: true, message: 'Vui chọn ảnh giá vé!' }]}
+        getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList[0])}
+        rules={[{ required: !oldImageLink, message: 'Vui chọn ảnh giá vé!' }]}
       >
         <Upload
           accept="image/*"
@@ -62,12 +82,12 @@ const SupplierForm = ({ onFinish, form, imageLink = null }) => {
           fileList={fileList}
           onChange={handleChange}
         >
-          {fileList.length < 1 && (
-            <button style={{ border: 0, background: 'none' }} type="button">
-              <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
-              <div style={{ marginTop: 8 }}>+ Tải ảnh lên</div>
-            </button>
-          )}
+          <button style={{ border: 0, background: 'none' }} type="button">
+            <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
+            <div style={{ marginTop: 8 }}>
+              {fileList.length < 1 && <div>+ Tải ảnh lên</div>}
+            </div>
+          </button>
         </Upload>
       </Form.Item>
 
@@ -89,4 +109,4 @@ const SupplierForm = ({ onFinish, form, imageLink = null }) => {
   );
 };
 
-export default SupplierForm;
+export default memo(SupplierForm);

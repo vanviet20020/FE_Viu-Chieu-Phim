@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, DatePicker, Form, Input, Select, Upload } from 'antd';
 import { MOVIE_STATUS } from '@/utils/constant';
+const urlServer = import.meta.env.VITE_SERVER_URL;
 
 const { Option } = Select;
 
@@ -21,15 +22,34 @@ const tailFormItemLayout = {
   },
 };
 
-const MovieForm = ({ onFinish, form = null, image = null }) => {
+const MovieForm = ({ onFinish, form = null, oldImageLink = null }) => {
   const [fileList, setFileList] = useState([]);
+
+  useEffect(() => {
+    if (oldImageLink) {
+      setFileList([
+        {
+          uid: '-1',
+          name: 'current_image.png',
+          status: 'done',
+          url: urlServer + oldImageLink,
+        },
+      ]);
+    }
+  }, [oldImageLink]);
 
   const handleChange = (info) => {
     setFileList(info.fileList);
   };
 
   const handleSubmit = (values) => {
-    const fileData = fileList[0].originFileObj;
+    let fileData = null;
+
+    if (fileList.length > 0 && fileList[0].originFileObj) {
+      fileData = fileList[0].originFileObj;
+    } else if (oldImageLink) {
+      fileData = oldImageLink;
+    }
 
     Object.assign(values, { image: fileData });
 
@@ -65,13 +85,8 @@ const MovieForm = ({ onFinish, form = null, image = null }) => {
       <Form.Item
         label="Ảnh thumnail"
         name="image"
-        getValueFromEvent={(e) => {
-          if (Array.isArray(e)) {
-            return e;
-          }
-          return e && e.fileList[0];
-        }}
-        rules={[{ required: true, message: 'Vui chọn ảnh thumnail!' }]}
+        getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList[0])}
+        rules={[{ required: !oldImageLink, message: 'Vui chọn ảnh giá vé!' }]}
       >
         <Upload
           accept="image/*"
@@ -81,12 +96,12 @@ const MovieForm = ({ onFinish, form = null, image = null }) => {
           fileList={fileList}
           onChange={handleChange}
         >
-          {fileList.length < 1 && (
-            <button style={{ border: 0, background: 'none' }} type="button">
-              <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
-              <div style={{ marginTop: 8 }}>+ Tải ảnh lên</div>
-            </button>
-          )}
+          <button style={{ border: 0, background: 'none' }} type="button">
+            <i className="bx bx-image-add" style={{ fontSize: '32px' }}></i>
+            <div style={{ marginTop: 8 }}>
+              {fileList.length < 1 && <div>+ Tải ảnh lên</div>}
+            </div>
+          </button>
         </Upload>
       </Form.Item>
 
